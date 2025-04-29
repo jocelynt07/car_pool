@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart';  // Import your DatabaseHelper
+import 'database_helper.dart';
 
 class CarpoolHistoryPage extends StatefulWidget {
   const CarpoolHistoryPage({Key? key}) : super(key: key);
@@ -17,13 +17,9 @@ class _CarpoolHistoryPageState extends State<CarpoolHistoryPage> {
     _loadCarpoolHistory();
   }
 
-  // Fetch carpool history (completed and canceled)
   Future<void> _loadCarpoolHistory() async {
     int userID = 1;  // Replace with actual userID (get from authentication)
     final historyData = await DatabaseHelper.instance.getCarpoolHistory(userID);
-
-    // Debug print to check the data fetched
-    print('Fetched history data: $historyData');
 
     setState(() {
       carpoolHistory = historyData;

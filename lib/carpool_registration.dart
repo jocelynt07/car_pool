@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'database_helper.dart';
+import 'database_helper.dart'; // Ensure correct import for your DatabaseHelper
+import 'registered_carpool.dart'; // Import the Registered Carpool screen
+import 'carpool_history.dart'; // Import the Carpool History screen
 
 class CarpoolRegistrationPage extends StatefulWidget {
-  const CarpoolRegistrationPage({Key? key}) : super(key: key);
-
   @override
   _CarpoolRegistrationPageState createState() =>
       _CarpoolRegistrationPageState();
@@ -17,6 +17,22 @@ class _CarpoolRegistrationPageState extends State<CarpoolRegistrationPage> {
   final _seatsController = TextEditingController();
   final _preferenceController = TextEditingController();
 
+  int _selectedIndex = 0;
+
+  // Function to handle navigation between pages based on the selected index
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  // List of pages for Bottom Navigation
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text('Carpool Registration'), // Placeholder for Carpool Registration
+    RegisteredCarpoolPage(), // Registered Carpool Page
+    CarpoolHistoryPage(), // Carpool History Page
+  ];
+
   void _submitCarpool() async {
     final pickUp = _pickUpController.text;
     final dropOff = _dropOffController.text;
@@ -27,14 +43,14 @@ class _CarpoolRegistrationPageState extends State<CarpoolRegistrationPage> {
 
     // Prepare data to insert into the database
     Map<String, dynamic> carpoolData = {
-      'userID': 1,  // Replace with actual userID
+      'userID': 1, // Replace with actual userID
       'pickUpPoint': pickUp,
       'dropOffPoint': dropOff,
       'date': date,
       'time': time,
       'availableSeats': seats,
       'ridePreference': preference,
-      'status': 'active',  // Set it as active
+      'status': 'active', // Set it as active
     };
 
     // Insert carpool into the database
@@ -50,7 +66,8 @@ class _CarpoolRegistrationPageState extends State<CarpoolRegistrationPage> {
       appBar: AppBar(
         title: Text('Carpool Registration'),
       ),
-      body: Padding(
+      body: _selectedIndex == 0
+          ? Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -86,6 +103,25 @@ class _CarpoolRegistrationPageState extends State<CarpoolRegistrationPage> {
             ),
           ],
         ),
+      )
+          : _widgetOptions.elementAt(_selectedIndex), // Display appropriate page based on the selected index
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Register Carpool',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Registered Carpool',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: 'Carpool History',
+          ),
+        ],
       ),
     );
   }

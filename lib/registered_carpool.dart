@@ -43,10 +43,8 @@ class _RegisteredCarpoolPageState extends State<RegisteredCarpoolPage> {
         10.0,  // Example earnings (you can calculate this based on the number of seats or other criteria)
       );
 
-      // Remove the completed carpool from the list (immediately update the UI)
-      setState(() {
-        registeredCarpools.removeAt(index);
-      });
+      // Reload the registered carpool list after the update
+      _loadRegisteredCarpools(); // Refresh the list
 
       print("Carpool completed at index $index");
     } else {
@@ -70,10 +68,8 @@ class _RegisteredCarpoolPageState extends State<RegisteredCarpoolPage> {
         0.0,  // No earnings for canceled carpool
       );
 
-      // Remove the canceled carpool from the list (immediately update the UI)
-      setState(() {
-        registeredCarpools.removeAt(index);
-      });
+      // Reload the registered carpool list after the update
+      _loadRegisteredCarpools(); // Refresh the list
 
       print("Carpool canceled at index $index");
     } else {

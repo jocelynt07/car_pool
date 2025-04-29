@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'carpool_registration.dart';  // Import the Carpool Registration screen
 
 class CarpoolMainPage extends StatelessWidget {
   @override
@@ -8,7 +9,23 @@ class CarpoolMainPage extends StatelessWidget {
         title: Text('Carpool Main Page'),
       ),
       body: Center(
-        child: Text('Welcome to Carpool App!', style: TextStyle(fontSize: 24)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Welcome to Carpool App!', style: TextStyle(fontSize: 24)),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to the Carpool Registration page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CarpoolRegistrationPage()),
+                );
+              },
+              child: Text('Register a Carpool'),
+            ),
+          ],
+        ),
       ),
     );
   }
